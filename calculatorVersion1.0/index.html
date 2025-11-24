@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    input[type="button"] {
+      flex: 1;
+      height: 50px;
+      font-size: 25px;
+    }
+
+    .highlightNumber {
+      box-shadow: 0 0 3px 2px yellow;
+    }
+
+    .highlightResult {
+      box-shadow: 0 0 3px 2px yellow;
+    }
+
+    .calculator {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(200, 4, 50, 0.8);
+      margin-top: 5px;
+      margin-right: auto;
+      margin-bottom: auto;
+      margin-left: auto;
+      border-radius: 5px;
+      padding-top: 0px;
+      padding-right: 5px;
+      padding-bottom: 5px;
+      padding-left: 2px;
+    }
+
+    .calculatorWindowResult {
+      width: 95%;
+      height: 80px;
+      text-align: right;
+      background-color: rgba(0, 0, 0, 1.0);
+      margin-top: 5px;
+      margin-right: 2%;
+      margin-bottom: 1px;
+      margin-left: 2%;
+      padding-top: 1px;
+      padding-right: 5px;
+      padding-bottom: 1px;
+      padding-left: 0px;
+      color: rgba(250, 250, 250, 1.0);
+      font-size: 16px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      outline: none;
+    }
+
+    .calculatorWindowNumber {
+      width: 95%;
+      height: 80px;
+      text-align: right;
+      background-color: rgba(0, 0, 0, 1.0);
+      margin-top: 5px;
+      margin-right: 2%;
+      margin-bottom: 1px;
+      margin-left: 2%;
+      padding-top: 1px;
+      padding-right: 5px;
+      padding-bottom: 1px;
+      padding-left: 0px;
+      color: rgba(250, 250, 250, 1.0);
+      font-size: 30px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      outline: none;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calculator">
+    <input type="text" class="calculatorWindowResult" id="displayResult" value="" readonly>
+    <input type="text" class="calculatorWindowNumber" id="displayNumber" value="" readonly>
+    <br><br>
+    <div class="buttons">
+      <div class="row">
+        <input type="button" onclick="clearNumber()" id="clear" value="지우기">
+        <input type="button" onclick="calculateDivide()" id="divide" value="/">
+        <input type="button" onclick="calculateMultiply()" id="multiply" value="*">
+      </div>
+      <div class="row">
+        <input type="button" onclick="inputNumber('9')" id="number9" value="9">
+        <input type="button" onclick="inputNumber('8')" id="number8" value="8">
+        <input type="button" onclick="inputNumber('7')" id="number7" value="7">
+      </div>
+      <div class="row">
+        <input type="button" onclick="inputNumber('6')" id="number6" value="6">
+        <input type="button" onclick="inputNumber('5')" id="number5" value="5">
+        <input type="button" onclick="inputNumber('4')" id="number4" value="4">
+      </div>
+      <div class="row">
+        <input type="button" onclick="inputNumber('3')" id="number3" value="3">
+        <input type="button" onclick="inputNumber('2')" id="number2" value="2">
+        <input type="button" onclick="inputNumber('1')" id="number1" value="1">
+      </div>
+      <div class="row">
+        <input type="button" onclick="inputNumber('0')" id="number0" value="0">
+        <input type="button" onclick="inputNumber('00')" id="number00" value="00">
+        <input type="button" onclick="inputNumber('000')" id="number0" value="000">
+      </div>
+      <div class="row">
+        <input type="button" onclick="calculateMinus()" id="minus" value="-">
+        <input type="button" onclick="calculatePlus()" id="plus" value="+">
+        <input type="button" onclick="calculateEqual()" id="equal" value="=">
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    /**
+     * @type {HTMLElement | null}
+     */
+    let displayNumberInput;
+    /**
+     * @type {HTMLElement | null}
+     */
+    let displayResultInput;
+    /**
+     * @type {string}
+     */
+    let displayNumberValue;
+    /**
+     * @type {number}
+     */
+    let number;
+    /**
+     * @type {string}
+     */
+    let operator;
+    /**
+     * @type {number}
+     */
+    let resultNumber;
+    /**
+     * @type {boolean}
+     */
+    let isEqualPressed = false;
+    /**
+     * @param {string} buttonNumber
+     */
+    function inputNumber(buttonNumber) {
+      if (isEqualPressed) {
+        clearNumber();
+        displayNumberInput = document.getElementById("displayNumber");
+        displayNumberValue = displayNumberInput.value;
+        displayNumberValue = displayNumberValue + buttonNumber;
+        displayNumberInput.value = displayNumberValue;
+        isEqualPressed = false;
+      } else {
+        displayNumberInput = document.getElementById("displayNumber");
+        displayNumberValue = displayNumberInput.value;
+        displayNumberValue = displayNumberValue + buttonNumber;
+        displayNumberInput.value = displayNumberValue;
+      }
+    }
+
+    function calculatePlus() {
+      displayNumberInput = document.getElementById("displayNumber");
+      displayResultInput = document.getElementById("displayResult");
+      displayNumberValue = displayNumberInput.value;
+      if (displayNumberValue === "") {
+        alert("숫자를 먼저 입력하세요.");
+      } else {
+        if (isEqualPressed) {
+          clearNumber();
+          isEqualPressed = false;
+        } else {
+          displayResultInput.value = displayResultInput.value + displayNumberValue + "+";
+          displayNumberValue = "";
+          displayNumberInput.value = displayNumberValue;
+        }
+      }
+    }
+
+    function calculateMinus() {
+      displayNumberInput = document.getElementById("displayNumber");
+      displayResultInput = document.getElementById("displayResult");
+      displayNumberValue = displayNumberInput.value;
+      if (displayNumberValue === "") {
+        alert("숫자를 먼저 입력하세요.");
+      } else {
+        if (isEqualPressed) {
+          clearNumber();
+          isEqualPressed = false;
+        } else {
+          displayResultInput.value = displayResultInput.value + displayNumberValue + "-";
+          displayNumberValue = "";
+          displayNumberInput.value = displayNumberValue;
+        }
+      }
+    }
+
+    function calculateMultiply() {
+      displayNumberInput = document.getElementById("displayNumber");
+      displayResultInput = document.getElementById("displayResult");
+      displayNumberValue = displayNumberInput.value;
+      if (displayNumberValue === "") {
+        alert("숫자를 먼저 입력하세요.");
+      } else {
+        if (isEqualPressed) {
+          clearNumber();
+          isEqualPressed = false;
+        } else {
+          displayResultInput.value = displayResultInput.value + displayNumberValue;
+          /**
+           * @type {string}
+           */
+          const displayResultValue = displayResultInput.value;
+          const tokens = displayResultValue.match(/\d+|\+|\-|\*|\//g);
+          resultNumber = Number(tokens[0]); //첫번째 숫자
+
+          for (let i = 1; i < tokens.length; i += 2) {
+            operator = tokens[i]; //연산자
+            number = Number(tokens[i + 1]); //다음숫자
+
+            switch (operator) {
+              case "+": resultNumber = resultNumber + number; break;
+              case "-": resultNumber = resultNumber - number; break;
+              case "*": resultNumber = resultNumber * number; break;
+              case "/": resultNumber = resultNumber / number; break;
+            }
+          }
+          displayResultInput.value = String(resultNumber);
+          displayResultInput.value = displayResultInput.value + "*";
+          displayNumberValue = "";
+          displayNumberInput.value = displayNumberValue;
+        }
+      }
+    }
+
+    function calculateDivide() {
+      displayNumberInput = document.getElementById("displayNumber");
+      displayResultInput = document.getElementById("displayResult");
+      displayNumberValue = displayNumberInput.value;
+      if (displayNumberValue === "") {
+        alert("숫자를 먼저 입력하세요.");
+      } else {
+        if (isEqualPressed) {
+          clearNumber();
+          isEqualPressed = false;
+        } else {
+          displayResultInput.value = displayResultInput.value + displayNumberValue;
+          /**
+           * @type {string}
+           */
+          const displayResultValue = displayResultInput.value;
+          const tokens = displayResultValue.match(/\d+|\+|\-|\*|\//g);
+          resultNumber = Number(tokens[0]); //숫자타입으로 캐스팅
+
+          for (let i = 1; i < tokens.length; i += 2) {
+            operator = tokens[i];
+            number = Number(tokens[i + 1]); //숫자타입으로 캐스팅
+            switch (operator) {
+              case "+": resultNumber = resultNumber + number; break;
+              case "-": resultNumber = resultNumber - number; break;
+              case "*": resultNumber = resultNumber * number; break;
+              case "/": resultNumber = resultNumber / number; break;
+            }
+          }
+          displayResultInput.value = String(resultNumber); //문자열타입으로 캐스팅
+          displayResultInput.value = displayResultInput.value + "/";
+          displayNumberValue = "";
+          displayNumberInput.value = displayNumberValue;
+        }
+      }
+    }
+
+    function calculateEqual() {
+      if (isEqualPressed) {
+        clearNumber();
+        isEqualPressed = false;
+      } else {
+        displayNumberInput = document.getElementById("displayNumber");
+        displayResultInput = document.getElementById("displayResult");
+        displayNumberValue = displayNumberInput.value;
+        if (displayNumberValue === "") {
+          alert("숫자를 먼저 입력하세요.");
+        } else {
+          displayResultInput.value = displayResultInput.value + displayNumberValue + "=";
+          /**
+           * @type {string}
+           */
+          const displayResultValue = displayResultInput.value;
+          const tokens = displayResultValue.match(/\d+|\+|\-|\*|\//g);
+          resultNumber = Number(tokens[0]); //첫번째 숫자
+
+          for (let i = 1; i < tokens.length; i += 2) {
+            operator = tokens[i]; //연산자
+            number = Number(tokens[i + 1]); //다음숫자
+
+            switch (operator) {
+              case "+": resultNumber = resultNumber + number; break;
+              case "-": resultNumber = resultNumber - number; break;
+              case "*": resultNumber = resultNumber * number; break;
+              case "/": resultNumber = resultNumber / number; break;
+            }
+          }
+          displayNumberInput.value = String(resultNumber);
+
+          isEqualPressed = true; //플래그 설정
+          displayNumberInput.classList.add("highlightNumber"); //highlight class add
+          displayResultInput.classList.add("highlightResult");
+        }
+      }
+    }
+
+    function clearNumber() {
+      displayNumberInput = document.getElementById("displayNumber");
+      displayResultInput = document.getElementById("displayResult");
+      displayNumberInput.value = "";
+      displayResultInput.value = "";
+      displayNumberInput.classList.remove("highlightNumber"); //highlight class remove
+      displayResultInput.classList.remove("highlightResult");
+    }
+
+
+  </script>
+</body>
+
+</html>
