@@ -97,13 +97,16 @@
 </head>
 
 <body>
+  <div id="alert" style="color: white;">
+   
+  </div>
   <div class="calculator">
     <input type="text" class="calculatorWindowResult" id="displayResult" value="" readonly>
     <input type="text" class="calculatorWindowNumber" id="displayNumber" value="" readonly>
     <br><br>
     <div class="buttons input-btn">
       <div class="row">
-        <input type="button" id="clear" value="Clear">
+        <input type="button" id="clear" value="지우기">
         <input type="button" id="divide" value="/">
         <input type="button" id="multiply" value="*">
       </div>
@@ -205,14 +208,20 @@
       inputNumber(buttonNumber);
     });*/
 
-
+    function showAlert(msg) {
+      const alert = document.getElementById("alert");
+      alert.textContent = msg;
+      alert.style.display = "block";
+      setTimeout(() => alert.style.display = "none", 2000);
+    
+    }
 
     function calculatePlus() {
       displayNumberInput = document.getElementById("displayNumber");
       displayResultInput = document.getElementById("displayResult");
       displayNumberValue = displayNumberInput.value;
       if (displayNumberValue === "") {
-        alert("숫자를 먼저 입력하세요.");
+        showAlert("숫자를 먼저 입력하세요");
       } else {
         if (isEqualPressed) {
           clearNumber();
@@ -230,7 +239,7 @@
       displayResultInput = document.getElementById("displayResult");
       displayNumberValue = displayNumberInput.value;
       if (displayNumberValue === "") {
-        alert("숫자를 먼저 입력하세요.");
+        showAlert("숫자를 먼저 입력하세요");
       } else {
         if (isEqualPressed) {
           clearNumber();
@@ -248,7 +257,7 @@
       displayResultInput = document.getElementById("displayResult");
       displayNumberValue = displayNumberInput.value;
       if (displayNumberValue === "") {
-        alert("숫자를 먼저 입력하세요.");
+        showAlert("숫자를 먼저 입력하세요");
       } else {
         if (isEqualPressed) {
           clearNumber();
@@ -286,7 +295,7 @@
       displayResultInput = document.getElementById("displayResult");
       displayNumberValue = displayNumberInput.value;
       if (displayNumberValue === "") {
-        alert("숫자를 먼저 입력하세요.");
+        showAlert("숫자를 먼저 입력하세요");
       } else {
         if (isEqualPressed) {
           clearNumber();
@@ -327,7 +336,7 @@
         displayResultInput = document.getElementById("displayResult");
         displayNumberValue = displayNumberInput.value;
         if (displayNumberValue === "") {
-          alert("숫자를 먼저 입력하세요.");
+          showAlert("숫자를 먼저 입력하세요");
         } else {
           displayResultInput.value = displayResultInput.value + displayNumberValue + "=";
           /**
@@ -355,8 +364,6 @@
           displayResultInput.classList.add("highlightResult");
         }
       }
-      
-      
     }
 
     function clearNumber() {
@@ -378,7 +385,7 @@
         calculateMultiply();
       } else if (inputButton === "/") {
         calculateDivide();
-      } else if (inputButton === "Clear") {
+      } else if (inputButton === "지우기") {
         clearNumber();
       } else if (inputButton === "=") {
         calculateEqual();
@@ -389,19 +396,14 @@
     }
 
     const inputButtons = document.querySelector(".input-btn");
-    inputButtons.addEventListener("pointerdown", function(event) {
-      event.preventDefault();
+    inputButtons.addEventListener("pointerdown", function (event) {
       handlerFunction(event);
-    }, { passive: false });
-    //inputButtons.removeEventListener("click", handlerFunction);
+    });
+
+
 
 
   </script>
 </body>
 
-
 </html>
-
-
-
-
