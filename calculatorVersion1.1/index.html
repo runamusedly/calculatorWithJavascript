@@ -386,11 +386,13 @@
         const buttonNumber = inputButton;
         inputNumber(buttonNumber);
       }
-      event.preventDefault();
     }
 
     const inputButtons = document.querySelector(".input-btn");
-    inputButtons.addEventListener("pointerdown", handlerFunction);
+    inputButtons.addEventListener("pointerdown", function(event) {
+      event.preventDefault();
+      handlerFunction(event);
+    });
     //inputButtons.removeEventListener("click", handlerFunction);
 
 
@@ -399,3 +401,4 @@
 
 
 </html>
+
