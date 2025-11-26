@@ -103,7 +103,7 @@
     <br><br>
     <div class="buttons input-btn">
       <div class="row">
-        <input type="button" id="clear" value="지우기">
+        <input type="button" id="clear" value="Clear">
         <input type="button" id="divide" value="/">
         <input type="button" id="multiply" value="*">
       </div>
@@ -125,7 +125,7 @@
       <div class="row">
         <input type="button" id="number0" value="0">
         <input type="button" id="number00" value="00">
-        <input type="button" id="number0" value="000">
+        <input type="button" id="number000" value="000">
       </div>
       <div class="row">
         <input type="button" id="minus" value="-">
@@ -378,7 +378,7 @@
         calculateMultiply();
       } else if (inputButton === "/") {
         calculateDivide();
-      } else if (inputButton === "지우기") {
+      } else if (inputButton === "Clear") {
         clearNumber();
       } else if (inputButton === "=") {
         calculateEqual();
@@ -392,7 +392,7 @@
     inputButtons.addEventListener("pointerdown", function(event) {
       event.preventDefault();
       handlerFunction(event);
-    });
+    }, { passive: false });
     //inputButtons.removeEventListener("click", handlerFunction);
 
 
@@ -401,6 +401,7 @@
 
 
 </html>
+
 
 
 
