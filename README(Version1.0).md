@@ -11,7 +11,7 @@ A simple calculator implemented in JavaScript.
 - JavaScript
 
 ## Screenshot
-<img src="screenshot/calculator1.png" alt="calculator">
+<img src="screenshot/calculator1.png" alt="calculator" width="20%">
 
 
 ## How to install and run
